@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Registro de Becas para Preparatoria | Programa Nacional</title>
+<style>
+  :root{
+    --verde:#0b6b3a;
+    --verde-oscuro:#074d29;
+    --dorado:#c9a227;
+    --gris:#f4f5f7;
+    --texto:#1c1f23;
+    --borde:#d6d9de;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:"Segoe UI",Roboto,Arial,sans-serif;
+    background:var(--gris);
+    color:var(--texto);
+    line-height:1.55;
+  }
+  .barra-gob{
+    background:var(--verde-oscuro);
+    color:#fff;
+    font-size:12px;
+    padding:6px 0;
+  }
+  .barra-gob .contenedor{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+  .contenedor{max-width:1080px;margin:0 auto;padding:0 20px}
+  header.principal{
+    background:#fff;
+    border-bottom:4px solid var(--dorado);
+    padding:18px 0;
+  }
+  header.principal .contenedor{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+  .escudo{
+    width:56px;height:56px;border-radius:50%;
+    background:var(--verde);color:#fff;
+    display:flex;align-items:center;justify-content:center;
+    font-weight:700;font-size:22px;flex-shrink:0;
+  }
+  header.principal h1{font-size:19px;line-height:1.25}
+  header.principal small{display:block;color:#5a6169;font-weight:400;font-size:13px}
+  nav.menu{background:var(--verde);}
+  nav.menu ul{list-style:none;display:flex;flex-wrap:wrap}
+  nav.menu a{
+    color:#fff;text-decoration:none;font-size:13.5px;
+    padding:12px 16px;display:block;
+  }
+  nav.menu a:hover{background:var(--verde-oscuro)}
+  .hero{
+    background:linear-gradient(135deg,var(--verde) 0%,#0e8a4b 100%);
+    color:#fff;padding:44px 0;
+  }
+  .hero h2{font-size:29px;margin-bottom:10px;max-width:720px}
+  .hero p{max-width:640px;opacity:.95}
+  .aviso{
+    background:#fff8e1;border-left:5px solid var(--dorado);
+    padding:14px 18px;margin:24px 0;font-size:14px;border-radius:4px;
+  }
+  main{padding:36px 0}
+  .grid{display:grid;grid-template-columns:2fr 1fr;gap:28px;align-items:start}
+  @media(max-width:820px){.grid{grid-template-columns:1fr}}
+  .tarjeta{
+    background:#fff;border:1px solid var(--borde);border-radius:8px;
+    padding:26px;
+  }
+  .tarjeta h3{font-size:19px;margin-bottom:6px;color:var(--verde-oscuro)}
+  .tarjeta p.sub{font-size:13.5px;color:#5a6169;margin-bottom:20px}
+  .pasos{display:flex;gap:8px;margin-bottom:24px;font-size:12.5px}
+  .pasos div{
+    flex:1;padding:9px 8px;text-align:center;border-radius:5px;
+    background:var(--gris);color:#6b7280;border:1px solid var(--borde);
+  }
+  .pasos div.activo{background:var(--verde);color:#fff;border-color:var(--verde);font-weight:600}
+  fieldset{border:none;display:none}
+  fieldset.visible{display:block}
+  .campo{margin-bottom:16px}
+  label{display:block;font-size:13.5px;font-weight:600;margin-bottom:5px}
+  label .req{color:#c0392b}
+  input,select{
+    width:100%;padding:10px 12px;border:1px solid var(--borde);
+    border-radius:5px;font-size:14.5px;font-family:inherit;background:#fff;
+  }
+  input:focus,select:focus{outline:2px solid var(--dorado);border-color:var(--verde)}
+  .fila{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:520px){.fila{grid-template-columns:1fr}}
+  .error{color:#c0392b;font-size:12px;margin-top:4px;display:none}
+  .error.visible{display:block}
+  .check{display:flex;gap:9px;align-items:flex-start;font-size:13px;margin-bottom:14px}
+  .check input{width:auto;margin-top:3px}
+  .acciones{display:flex;gap:12px;margin-top:22px;flex-wrap:wrap}
+  button{
+    font-family:inherit;font-size:14.5px;font-weight:600;
+    padding:11px 26px;border-radius:5px;border:none;cursor:pointer;
+  }
+  .btn-primario{background:var(--verde);color:#fff}
+  .btn-primario:hover{background:var(--verde-oscuro)}
+  .btn-sec{background:#fff;color:var(--verde);border:1px solid var(--verde)}
+  .btn-sec:hover{background:var(--gris)}
+  aside .tarjeta{margin-bottom:20px}
+  aside h4{font-size:15px;color:var(--verde-oscuro);margin-bottom:10px}
+  aside ul{list-style:none;font-size:13.5px}
+  aside li{padding:7px 0;border-bottom:1px dashed var(--borde)}
+  aside li:last-child{border:none}
+  aside li::before{content:"▸ ";color:var(--dorado);font-weight:700}
+  .fechas{font-size:13.5px}
+  .fechas strong{display:block;color:var(--verde-oscuro)}
+  #exito{display:none;text-align:center;padding:40px 20px}
+  #exito .icono{
+    width:76px;height:76px;border-radius:50%;background:var(--verde);
+    color:#fff;font-size:38px;display:flex;align-items:center;justify-content:center;
+    margin:0 auto 18px;
+  }
+  .folio{
+    background:var(--gris);border:1px dashed var(--verde);border-radius:6px;
+    padding:12px;font-family:monospace;font-size:17px;margin:16px auto;
+    max-width:280px;letter-spacing:1px;
+  }
+  footer{background:#14251b;color:#c7d2ca;font-size:13px;padding:30px 0;margin-top:40px}
+  footer .contenedor{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:22px}
+  footer h5{color:#fff;font-size:13.5px;margin-bottom:8px}
+  footer ul{list-style:none;font-size:12.5px}
+  footer li{padding:3px 0}
+  .legal{border-top:1px solid #2b3d31;margin-top:24px;padding-top:16px;font-size:11.5px;color:#8fa396}
+</style>
+</head>
+<body>
+
+<div class="barra-gob">
+  <div class="contenedor">
+    <span>Gobierno de México · Programa Nacional de Becas</span>
+    <span>Tel. 800 000 0000 · Lunes a viernes 9:00–18:00</span>
+  </div>
+</div>
+
+<header class="principal">
+  <div class="contenedor">
+    <div class="escudo">M</div>
+    <div>
+      <h1>Bienestar Educativo</h1>
+      <small>Sistema de Registro para Estudiantes de Educación Media Superior</small>
+    </div>
+  </div>
+</header>
+
+<nav class="menu">
+  <div class="contenedor">
+    <ul>
+      <li><a href="#">Inicio</a></li>
+      <li><a href="#">Convocatoria</a></li>
+      <li><a href="#">Requisitos</a></li>
+      <li><a href="#">Preguntas Frecuentes</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="contenedor">
+    <h2>Solicitud de Beca Universal Benito Juárez</h2>
+    <p>Completa el formulario digital para postularte al programa de apoyo económico del ciclo escolar vigente. Ten a la mano tus documentos oficiales.</p>
+  </div>
+</div>
+
+<div class="contenedor">
+  <div class="aviso">
+    <strong>Aviso importante:</strong> El registro es completamente gratuito y personal. No compartas tus datos confidenciales con terceras personas.
+  </div>
+</div>
+
+<main class="contenedor">
+  <div class="grid">
+    
+    <!-- Sección del Formulario Principal -->
+    <div class="tarjeta" id="contenedor-formulario">
+      <h3>Formulario de Inscripción</h3>
+      <p class="sub">Por favor, rellena los campos con información verídica.</p>
+      
+      <div class="pasos">
+        <div id="paso-indicador-1" class="activo">1. Datos Personales</div>
+        <div id="paso-indicador-2">2. Escuela</div>
+        <div id="paso-indicador-3">3. Confirmar</div>
+      </div>
+
+      <form id="formulario-beca" onsubmit="procesarRegistro(event)">
+        
+        <!-- PASO 1: Datos Personales -->
+        <fieldset id="paso-1" class="visible">
+          <div class="campo">
+            <label for="curp">CURP <span class="req">*</span></label>
+            <input type="text" id="curp" placeholder="18 caracteres" maxlength="18" required style="text-transform: uppercase;">
+          </div>
+          <div class="fila">
+            <div class="campo">
+              <label for="nombre">Nombre(s) <span class="req">*</span></label>
+              <input type="text" id="nombre" required>
+            </div>
+            <div class="campo">
+              <label for="apellidos">Apellidos <span class="req">*</span></label>
+              <input type="text" id="apellidos" required>
+            </div>
+          </div>
+          <div class="campo">
+            <label for="correo">Correo Electrónico <span class="req">*</span></label>
+            <input type="email" id="correo" placeholder="ejemplo@correo.com" required>
+          </div>
+          <div class="acciones">
+            <button type="button" class="btn-primario" onclick="cambiarPaso(1, 2)">Siguiente</button>
+          </div>
+        </fieldset>
+
+        <!-- PASO 2: Datos Escolares -->
+        <fieldset id="paso-2">
+          <div class="campo">
+            <label for="cct">Clave del Centro de Trabajo (CCT) <span class="req">*</span></label>
+            <input type="text" id="cct" placeholder="Ej. 09DTH0001A" required style="text-transform: uppercase;">
+          </div>
+          <div class="fila">
+            <div class="campo">
+              <label for="estado">Estado <span class="req">*</span></label>
+              <select id="estado" required>
+                <option value="">Selecciona...</option>
+                <option value="cdmx">Ciudad de México</option>
+                <option value="mexico">Estado de México</option>
+                <option value="jalisco">Jalisco</option>
+                <option value="michoacan">Michoacán</option>
+              </select>
+            </div>
+            <div class="campo">
+              <label for="semestre">Semestre actual <span class="req">*</span></label>
+              <select id="semestre" required>
+                <option value="">Selecciona...</option>
+                <option value="1">1er Semestre</option>
+                <option value="3">3er Semestre</option>
+                <option value="5">5to Semestre</option>
+              </select>
+            </div>
+          </div>
+          <div class="acciones">
+            <button type="button" class="btn-sec" onclick="cambiarPaso(2, 1)">Anterior</button>
+            <button type="button" class="btn-primario" onclick="cambiarPaso(2, 3)">Siguiente</button>
+          </div>
+        </fieldset>
+
+        <!-- PASO 3: Términos y Confirmación -->
+        <fieldset id="paso-3">
+          <div class="campo">
